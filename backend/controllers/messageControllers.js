@@ -35,6 +35,10 @@ const sendMessage = asyncHandler(async (req, res) => {
     chat: chatId,
   };
 
+  if(req.body.delay) {
+    await new Promise((resolve) => setTimeout(resolve, req.body.delay));
+  }
+
   try {
     var message = await Message.create(newMessage);
 
