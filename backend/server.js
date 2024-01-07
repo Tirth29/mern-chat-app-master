@@ -6,6 +6,10 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
+const User = require("./models/userModel");
+const session = require("express-session");
+const passport = require("passport");
+const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 
 require("dotenv").config({ path: "./config.env" });
 connectDB();
@@ -89,3 +93,67 @@ io.on("connection", (socket) => {
     socket.leave(userData._id);
   });
 });
+
+app.use(
+  session({
+    secret: "gagafeuhibfkqwbc",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// setuppassport
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new OAuth2Strategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3001/auth/google/callback",
+      scope: ["profile", "email"],
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await User.findOne({ googleId: profile.id });
+
+        if (!user) {
+          user = new User({
+            googleId: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            image: profile.photos[0].value,
+          });
+          await user.save();
+        }
+
+        return done(null, user);
+      } catch (error) {
+        return done(error, null);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+// initial google ouath login
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+app.get(
+  "http://localhost:3001/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "http://localhost:3000",
+    failureRedirect: "http://localhost:3000",
+  })
+);

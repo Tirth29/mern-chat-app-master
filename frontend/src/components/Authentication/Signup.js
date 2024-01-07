@@ -99,12 +99,16 @@ const Signup = () => {
       return;
     }
     console.log(pics);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (
+      pics.type === "image/jpeg" ||
+      pics.type === "image/png" ||
+      pics.type === "image/jpg"
+    ) {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+      data.append("cloud_name", "da4imwbrd");
+      fetch("https://api.cloudinary.com/v1_1/da4imwbrd/image/upload", {
         method: "post",
         body: data,
       })

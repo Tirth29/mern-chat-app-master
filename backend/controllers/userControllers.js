@@ -61,6 +61,12 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+const editUser = asyncHandler(async (req, res) => {
+  const { name, number, email, pic } = req.body;
+  await User.findOneAndUpdate({ email }, { name, number, pic });
+  res.status(200).json({ message: "Profile Updated Successfully" });
+});
+
 //@description     Auth the user
 //@route           POST /api/users/login
 //@access          Public
@@ -84,4 +90,4 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { allUsers, registerUser, authUser };
+module.exports = { allUsers, registerUser, authUser, editUser };

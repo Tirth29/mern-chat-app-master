@@ -54,10 +54,16 @@ const ProfileModal = ({ user, children }) => {
             >
               Email: {user.email}
             </Text>
+            <Text
+              fontSize={{ base: "28px", md: "30px" }}
+              fontFamily="Work sans"
+            >
+              Phone No.: {user.number}
+            </Text>
           </ModalBody>
-          <ModalFooter>
+          {/* <ModalFooter>
             <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
+          </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>
