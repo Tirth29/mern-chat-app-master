@@ -37,7 +37,7 @@ const EditModal = ({ user, children }) => {
         },
       };
       const { data } = await axios.post(
-        "/api/user/edit",
+        `${process.env.REACT_APP_BACKEND_HOST}/api/user/edit`,
         {
           name,
           number,
