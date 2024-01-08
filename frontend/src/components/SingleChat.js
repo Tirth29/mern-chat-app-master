@@ -16,7 +16,8 @@ import Picker from "emoji-picker-react";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://192.168.120.101:3000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+import { socket_host } from "../config.json";
+const ENDPOINT = socket_host; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -82,15 +83,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
         };
         setNewMessage("");
+        let delay = 0;
         const { data } = await axios.post(
           "/api/message",
           {
             content: newMessage,
             chatId: selectedChat,
+            delay,
           },
           config
         );
-        socket.emit("new message", data);
+        data.delay = delay;
+        socket.emit("schedule_message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -124,6 +128,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
+      console.log("New message received:", newMessageRecieved);
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
