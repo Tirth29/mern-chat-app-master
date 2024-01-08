@@ -12,6 +12,7 @@ import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 import Picker from "emoji-picker-react";
+import MessageScheduleModal from "./miscellaneous/MessageScheduleModel";
 
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
@@ -27,6 +28,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+  const [delay,setDelay]=useState(0);
   const toast = useToast();
 
   const defaultOptions = {
@@ -73,7 +75,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const sendMessage = async (event) => {
-    if (event.key === "Enter" && newMessage) {
+    if ((event.type==='click' || event.key === "Enter" ) && newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
@@ -83,7 +85,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
         };
         setNewMessage("");
-        let delay = 0;
         const { data } = await axios.post(
           "/api/message",
           {
@@ -108,6 +109,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
+  const delayset=(data)=>{
+    setDelay(data)
+  }
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -264,19 +269,22 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   value={newMessage}
                   onChange={typingHandler}
                 />
-                <img
-                  className="emoji-icon"
-                  src="https://cdn-icons-png.flaticon.com/128/5196/5196789.png"
-                  // onClick={() => setShowPicker((val) => !val)}
-                  alt="message scheduler"
-                  style={{ height: "25px", width: "25px",marginRight: "40px" }}
-                />
+                <div className="msg-scheduler">
+                  <MessageScheduleModal  user={user} delayset={delayset} />
+                </div>
                 <img
                   className="emoji-icon"
                   src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
                   onClick={() => setShowPicker((val) => !val)}
                   alt="emoji"
                   style={{ height: "25px", width: "25px" }}
+                />
+                <img
+                  className="send-icon"
+                  src="https://cdn-icons-png.flaticon.com/128/9502/9502119.png"
+                  onClick={(e)=>sendMessage(e)}
+                  alt="emoji"
+                  style={{ height: "30px", width: "30px" }}
                 />
                 {showPicker && (
                   <Picker
@@ -296,6 +304,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Text>
         </Box>
       )}
+      
     </>
   );
 };
