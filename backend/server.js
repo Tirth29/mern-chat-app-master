@@ -57,7 +57,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://192.168.120.101:3000",
+    origin: "*",
     // credentials: true,
   },
 });
@@ -86,6 +86,19 @@ io.on("connection", (socket) => {
 
       socket.in(user._id).emit("message recieved", newMessageRecieved);
     });
+  });
+
+  socket.on("schedule_message", (newMessageRecieved) => {
+    var chat = newMessageRecieved.chat;
+    console.log("delay", newMessageRecieved.delay);
+    if (!chat.users) return console.log("chat.users not defined");
+
+    setTimeout(() => {
+      chat.users.forEach((user) => {
+        if (user._id == newMessageRecieved.sender._id) return;
+        socket.in(user._id).emit("message recieved", newMessageRecieved);
+      });
+    }, newMessageRecieved.delay || 0);
   });
 
   socket.off("setup", () => {
