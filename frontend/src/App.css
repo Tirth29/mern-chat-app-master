@@ -6,7 +6,7 @@
   background-image: url("./chat1.jpg");
   background-position: center;
   background-size: cover;
-  font-weight:400;
+  font-weight: 400;
 }
 
 ::-webkit-scrollbar {
@@ -30,13 +30,25 @@
   top: 6px;
   right: 5px;
 }
-.msg-scheduler{
+.msg-scheduler {
   cursor: pointer;
   position: absolute;
   top: 6px;
   right: 40px;
 }
-
+.audio-container {
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 120px;
+}
+.recording {
+  margin-top: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%;
+}
 ::-webkit-scrollbar-thumb {
   background: rgba(136, 136, 136, 0.281);
 }
