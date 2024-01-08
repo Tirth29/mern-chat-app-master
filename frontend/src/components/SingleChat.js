@@ -18,7 +18,8 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { socket_host } from "../config.json";
-const ENDPOINT = socket_host; // "https://QuickChat.herokuapp.com"; -> After deployment
+const ENDPOINT = process.env.REACT_APP_SOCKET_HOST; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+console.log(ENDPOINT);
 var socket, selectedChatCompare;
 
 let audioChunks = [];
@@ -61,7 +62,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${process.env.REACT_APP_BACKEND_HOST}/api/message/${selectedChat._id}`,
         config
       );
 
@@ -98,7 +99,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:3001/api/message",
+          `${process.env.REACT_APP_BACKEND_HOST}/api/message`,
           JSON.stringify({
             content: newMessage,
             chatId: selectedChat,
