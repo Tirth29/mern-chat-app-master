@@ -22,9 +22,8 @@ const allMessages = asyncHandler(async (req, res) => {
 //@route           POST /api/Message/
 //@access          Protected
 const sendMessage = asyncHandler(async (req, res) => {
-  const { content, chatId } = req.body;
-
-  if (!content || !chatId) {
+  const { content, chatId, type, audio } = req.body;
+  if (!(audio || content) || !chatId) {
     console.log("Invalid data passed into request");
     return res.sendStatus(400);
   }
@@ -33,9 +32,11 @@ const sendMessage = asyncHandler(async (req, res) => {
     sender: req.user._id,
     content: content,
     chat: chatId,
+    type,
+    audio: type === "audio" ? audio : null,
   };
 
-  if(req.body.delay) {
+  if (req.body.delay) {
     await new Promise((resolve) => setTimeout(resolve, req.body.delay));
   }
 
