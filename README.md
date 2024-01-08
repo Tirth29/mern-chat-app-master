@@ -1,4 +1,3 @@
-![Screenshot 2024-01-09 003737](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/19d6e14f-4a40-4f2d-a621-fb6520dde027)![Screenshot 2024-01-08 222057](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/c021a615-c011-4a23-bd36-52b150954de7)![Screenshot 2024-01-08 221905](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/f6ca8018-0fd4-4f9b-bad0-256ce380b8b5)
 # QuickChat
 
 QuickChat is a Full Stack Chatting App.
