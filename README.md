@@ -1,10 +1,5 @@
 # QuickChat
 
-<<<<<<< HEAD
-# QuickChat
-
-=======
->>>>>>> 188f71d404648ea1e7289870382b92a32ed03dec
 QuickChat is a Full Stack Chatting App.
 Uses Socket.io for real time communication and stores user details in encrypted format in Mongo DB Database.
 ## Tech Stack
@@ -17,10 +12,6 @@ Uses Socket.io for real time communication and stores user details in encrypted 
   
 ## Demo
 
-<<<<<<< HEAD
-https://QuickChat.herokuapp.com/
-=======
->>>>>>> 188f71d404648ea1e7289870382b92a32ed03dec
 
 ## Run Locally
 
@@ -73,11 +64,11 @@ Start the Client
 ### One to One chat
 ![Screenshot 2024-01-09 002729](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/3cfa02e8-39e8-4059-bf3f-e1d4eae9cd45)
 
-### Voice messages
-![Screenshot 2024-01-09 010533](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/c2ea9289-3129-4a1e-8343-cf2ba275e02a)
-
 ### Search Users
 ![Screenshot 2024-01-09 002904](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/3412e182-0065-4862-8abf-5b0bb3d868db)
+
+### Voice messages
+![Uploading Screenshot 2024-01-09 010533.png…]()
 
 ### Create Group Chats
 ![Screenshot 2024-01-09 003441](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/6273cf7a-81bd-476e-8b97-6f6b51b4d501)
