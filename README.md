@@ -68,7 +68,7 @@ Start the Client
 ![Screenshot 2024-01-09 002904](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/3412e182-0065-4862-8abf-5b0bb3d868db)
 
 ### Voice messages
-![Uploading Screenshot 2024-01-09 010533.png…]()
+![Screenshot 2024-01-09 010533](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/10c67e3b-f7ee-4466-9115-e2480d4ac561)
 
 ### Create Group Chats
 ![Screenshot 2024-01-09 003441](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/6273cf7a-81bd-476e-8b97-6f6b51b4d501)
