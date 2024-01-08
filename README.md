@@ -1,7 +1,7 @@
+![Screenshot 2024-01-09 003737](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/19d6e14f-4a40-4f2d-a621-fb6520dde027)![Screenshot 2024-01-08 222057](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/c021a615-c011-4a23-bd36-52b150954de7)![Screenshot 2024-01-08 221905](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/f6ca8018-0fd4-4f9b-bad0-256ce380b8b5)
+# QuickChat
 
-# Talk-A-Tive
-
-Talk-a-tive is a Full Stack Chatting App.
+QuickChat is a Full Stack Chatting App.
 Uses Socket.io for real time communication and stores user details in encrypted format in Mongo DB Database.
 ## Tech Stack
 
@@ -13,15 +13,13 @@ Uses Socket.io for real time communication and stores user details in encrypted 
   
 ## Demo
 
-https://talk-a-tive.herokuapp.com/
 
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/group%20%2B%20notif.PNG)
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/piyush-eon/mern-chat-app
+  (https://github.com/Tirth29/mern-chat-app-master.git)
 ```
 
 Go to the project directory
@@ -58,24 +56,40 @@ Start the Client
 # Features
 
 ### Authenticaton
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/login.PNG)
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/signup.PNG)
+![Screenshot 2024-01-09 001717](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/b26598bd-f452-40b9-856d-6d3e2b3257f8)
+![Screenshot 2024-01-09 001734](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/47e9051e-fea3-41cf-b4ca-3448a3a7d965)
+
 ### Real Time Chatting with Typing indicators
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/real-time.PNG)
+![Screenshot 2024-01-09 003737](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/9819748f-b217-4abf-a45b-f1cf3c288d9a)
+
 ### One to One chat
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/mainscreen.PNG)
+![Screenshot 2024-01-09 002729](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/3cfa02e8-39e8-4059-bf3f-e1d4eae9cd45)
+
 ### Search Users
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/search.PNG)
+![Screenshot 2024-01-09 002904](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/3412e182-0065-4862-8abf-5b0bb3d868db)
+
 ### Create Group Chats
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/new%20grp.PNG)
+![Screenshot 2024-01-09 003441](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/6273cf7a-81bd-476e-8b97-6f6b51b4d501)
+
 ### Notifications 
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/group%20%2B%20notif.PNG)
+![Screenshot 2024-01-09 003814](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/e8f6de7b-2020-4437-8e4e-b41905e90b4e)
+
 ### Add or Remove users from group
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/add%20rem.PNG)
+![Screenshot 2024-01-09 004037](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/7748beda-a7a0-49c4-84ce-657d00dacd38)
+
 ### View Other user Profile
-![](https://github.com/piyush-eon/mern-chat-app/blob/master/screenshots/profile.PNG)
+![Screenshot 2024-01-09 002756](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/b574acc4-cabb-4669-9817-6b50aaf2f23e)
+
+### Emoji
+![Screenshot 2024-01-09 003033](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/2122f158-dad2-4f09-8d43-5aeebdfe2d04)
+
+### Schedule message
+![Screenshot 2024-01-09 003112](https://github.com/Tirth29/mern-chat-app-master/assets/97218429/14f415af-9853-40fc-8736-03677d240581)
+
+
+
 ## Made By
 
-- [@Piyush-eon](https://github.com/piyush-eon)
+-Coder_bros
 
   
