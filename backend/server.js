@@ -92,13 +92,17 @@ io.on("connection", (socket) => {
     var chat = newMessageRecieved.chat;
     console.log("delay", newMessageRecieved.delay);
     if (!chat.users) return console.log("chat.users not defined");
-
-    setTimeout(() => {
-      chat.users.forEach((user) => {
-        if (user._id == newMessageRecieved.sender._id) return;
-        socket.in(user._id).emit("message recieved", newMessageRecieved);
-      });
-    }, newMessageRecieved.delay || 0);
+    const delay = parseInt(newMessageRecieved.delay, 10) || 0;
+    try {
+      setTimeout(() => {
+        chat.users.forEach((user) => {
+          if (user._id == newMessageRecieved.sender._id) return;
+          socket.in(user._id).emit("message recieved", newMessageRecieved);
+        });
+      }, delay);
+    } catch (error) {
+      console.log("Error in setTimeout:", error);
+    }
   });
 
   socket.off("setup", () => {

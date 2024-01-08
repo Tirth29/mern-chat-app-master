@@ -18,11 +18,21 @@ const MessageScheduleModal = ({ user, children,delayset }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [delay, setDelay] = useState();
+  const [selectedDateTime, setSelectedDateTime] = useState(null);
 
   const submitHandler = async () => {
-    setDelay(delay);
-    delayset(delay);
-    onClose()
+    if (selectedDateTime) {
+      const selectedDate = new Date(selectedDateTime);
+      const currentTime = new Date();
+      
+      // Calculate the delay in seconds
+      const seconds = Math.floor((selectedDate.getTime() - currentTime.getTime()) / 1000);
+
+      setDelay(seconds)
+      delayset(seconds); // Pass the seconds to the delayset function
+      // console.log(delay);
+      onClose();
+    }
   };
 
   
@@ -53,10 +63,9 @@ const MessageScheduleModal = ({ user, children,delayset }) => {
           <FormControl id="number">
             <FormLabel>Delay</FormLabel>
             <Input
-              type="number"
-              placeholder="Enter Delay"
-              value={delay}
-              onChange={(e) => setDelay(e.target.value)}
+              type="datetime-local"
+              value={selectedDateTime}
+              onChange={(e) => setSelectedDateTime(e.target.value)}
             />
           </FormControl>
           <Button

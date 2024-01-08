@@ -77,6 +77,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const sendMessage = async (event) => {
     if ((event.type==='click' || event.key === "Enter" ) && newMessage) {
       socket.emit("stop typing", selectedChat._id);
+      console.log(delay);
       try {
         const config = {
           headers: {
