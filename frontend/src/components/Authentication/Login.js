@@ -7,7 +7,7 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";
-import { GoogleLogin } from "react-google-login";
+// import { GoogleLogin } from "react-google-login";
 require("dotenv").config("../config.env");
 
 const Login = () => {
@@ -21,9 +21,9 @@ const Login = () => {
   const history = useHistory();
   const { setUser } = ChatState();
 
-  const loginwithgoogle = () => {
-    window.open("http://localhost:3001/auth/google/callback", "_self");
-  };
+  // const loginwithgoogle = () => {
+  //   window.open("http://localhost:3001/auth/google/callback", "_self");
+  // };
 
   const submitHandler = async () => {
     setLoading(true);
@@ -116,7 +116,7 @@ const Login = () => {
         variant="solid"
         colorScheme="red"
         width="100%"
-        onClick={loginwithgoogle}
+        // onClick={loginwithgoogle}
       >
         {/* <img
             src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"

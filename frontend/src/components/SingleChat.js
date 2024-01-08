@@ -261,6 +261,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 />
                 <img
                   className="emoji-icon"
+                  src="https://cdn-icons-png.flaticon.com/128/5196/5196789.png"
+                  // onClick={() => setShowPicker((val) => !val)}
+                  alt="message scheduler"
+                  style={{ height: "25px", width: "25px",marginRight: "40px" }}
+                />
+                <img
+                  className="emoji-icon"
                   src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
                   onClick={() => setShowPicker((val) => !val)}
                   alt="emoji"

@@ -18,7 +18,7 @@ import { useHistory } from "react-router";
 
 const EditModal = ({ user, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const toast = useToast();
   const history = useHistory();
 

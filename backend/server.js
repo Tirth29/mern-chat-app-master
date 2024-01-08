@@ -106,54 +106,54 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(
-  new OAuth2Strategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/auth/google/callback",
-      scope: ["profile", "email"],
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        let user = await User.findOne({ googleId: profile.id });
+// passport.use(
+//   new OAuth2Strategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: "http://localhost:3001/auth/google/callback",
+//       scope: ["profile", "email"],
+//     },
+//     async (accessToken, refreshToken, profile, done) => {
+//       try {
+//         let user = await User.findOne({ googleId: profile.id });
 
-        if (!user) {
-          user = new User({
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            image: profile.photos[0].value,
-          });
-          await user.save();
-        }
+//         if (!user) {
+//           user = new User({
+//             googleId: profile.id,
+//             name: profile.displayName,
+//             email: profile.emails[0].value,
+//             image: profile.photos[0].value,
+//           });
+//           await user.save();
+//         }
 
-        return done(null, user);
-      } catch (error) {
-        return done(error, null);
-      }
-    }
-  )
-);
+//         return done(null, user);
+//       } catch (error) {
+//         return done(error, null);
+//       }
+//     }
+//   )
+// );
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
 
-// initial google ouath login
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+// // initial google ouath login
+// app.get(
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["profile", "email"] })
+// );
 
-app.get(
-  "http://localhost:3001/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "http://localhost:3000",
-    failureRedirect: "http://localhost:3000",
-  })
-);
+// app.get(
+//   "http://localhost:3001/auth/google/callback",
+//   passport.authenticate("google", {
+//     successRedirect: "http://localhost:3000",
+//     failureRedirect: "http://localhost:3000",
+//   })
+// );
