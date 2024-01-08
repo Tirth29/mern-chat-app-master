@@ -4,10 +4,8 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   useDisclosure,
   IconButton,
   Text,
@@ -58,7 +56,7 @@ const ProfileModal = ({ user, children }) => {
               fontSize={{ base: "28px", md: "30px" }}
               fontFamily="Work sans"
             >
-              Phone No.: {user.number}
+              Phone No: {user.number}
             </Text>
           </ModalBody>
           {/* <ModalFooter>
