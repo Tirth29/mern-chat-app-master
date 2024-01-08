@@ -203,32 +203,32 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("setting up media");
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then((stream) => {
-        mediaRecorder = new MediaRecorder(stream);
+  // useEffect(() => {
+  //   console.log("setting up media");
+  //   navigator.mediaDevices
+  //     .getUserMedia({ audio: true })
+  //     .then((stream) => {
+  //       mediaRecorder = new MediaRecorder(stream);
 
-        mediaRecorder.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            audioChunks.push(event.data);
-          }
-        };
-        mediaRecorder.onstop = async () => {
-          audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-          // console.log("Audio blob: ", audioBlob);
-          const audioUrl = URL.createObjectURL(audioBlob);
-          audioBuffer = new Uint8Array(await audioBlob.arrayBuffer());
-          // document.getElementById("audioPlayer")?.src = audioUrl;
-        };
-      })
-      .catch((error) => {
-        console.error("Error accessing microphone:", error);
-        // errorMessage.textContent =
-        // "Error accessing microphone. Please grant permission and reload the page.";
-      });
-  }, []);
+  //       mediaRecorder.ondataavailable = (event) => {
+  //         if (event.data.size > 0) {
+  //           audioChunks.push(event.data);
+  //         }
+  //       };
+  //       mediaRecorder.onstop = async () => {
+  //         audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+  //         // console.log("Audio blob: ", audioBlob);
+  //         const audioUrl = URL.createObjectURL(audioBlob);
+  //         audioBuffer = new Uint8Array(await audioBlob.arrayBuffer());
+  //         // document.getElementById("audioPlayer")?.src = audioUrl;
+  //       };
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error accessing microphone:", error);
+  //       // errorMessage.textContent =
+  //       // "Error accessing microphone. Please grant permission and reload the page.";
+  //     });
+  // }, []);
 
   const [showPicker, setShowPicker] = useState(false);
   const onEmojiClick = (event, emojiObject) => {
@@ -353,7 +353,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   value={newMessage}
                   onChange={typingHandler}
                 />
-                <div
+                {/* <div
                   className="audio-container"
                   onClick={() => {
                     if (isRecording) {
@@ -378,7 +378,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                       />
                     </div>
                   )}
-                </div>
+                </div> */}
                 <div className="msg-scheduler">
                   <MessageScheduleModal user={user} delayset={delayset} />
                 </div>
