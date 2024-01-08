@@ -12,11 +12,13 @@ import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 import Picker from "emoji-picker-react";
+import MessageScheduleModal from "./miscellaneous/MessageScheduleModel";
 
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://192.168.120.101:3000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+import { socket_host } from "../config.json";
+const ENDPOINT = socket_host; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -26,6 +28,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+  const [delay,setDelay]=useState(0);
   const toast = useToast();
 
   const defaultOptions = {
@@ -72,8 +75,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const sendMessage = async (event) => {
-    if (event.key === "Enter" && newMessage) {
+    if ((event.type==='click' || event.key === "Enter" ) && newMessage) {
       socket.emit("stop typing", selectedChat._id);
+      console.log(delay);
       try {
         const config = {
           headers: {
@@ -87,10 +91,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           {
             content: newMessage,
             chatId: selectedChat,
+            delay,
           },
           config
         );
-        socket.emit("new message", data);
+        data.delay = delay;
+        socket.emit("schedule_message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -104,6 +110,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
+  const delayset=(data)=>{
+    setDelay(data)
+  }
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -124,6 +134,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
+      console.log("New message received:", newMessageRecieved);
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -259,12 +270,22 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   value={newMessage}
                   onChange={typingHandler}
                 />
+                <div className="msg-scheduler">
+                  <MessageScheduleModal  user={user} delayset={delayset} />
+                </div>
                 <img
                   className="emoji-icon"
                   src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
                   onClick={() => setShowPicker((val) => !val)}
                   alt="emoji"
                   style={{ height: "25px", width: "25px" }}
+                />
+                <img
+                  className="send-icon"
+                  src="https://cdn-icons-png.flaticon.com/128/9502/9502119.png"
+                  onClick={(e)=>sendMessage(e)}
+                  alt="emoji"
+                  style={{ height: "30px", width: "30px" }}
                 />
                 {showPicker && (
                   <Picker
@@ -284,6 +305,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Text>
         </Box>
       )}
+      
     </>
   );
 };

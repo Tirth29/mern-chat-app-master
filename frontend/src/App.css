@@ -21,7 +21,20 @@
   cursor: pointer;
   position: absolute;
   top: 8px;
+  right: 45px;
+}
+
+.send-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 6px;
   right: 5px;
+}
+.msg-scheduler{
+  cursor: pointer;
+  position: absolute;
+  top: 6px;
+  right: 40px;
 }
 
 ::-webkit-scrollbar-thumb {
