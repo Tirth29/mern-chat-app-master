@@ -18,7 +18,7 @@ const ScrollableChat = ({ messages }) => {
         messages.map((m, i) => {
           let uint8arr = new Uint8Array(m.audio?.split(','));
           let audioBlob = new Blob([uint8arr], { type: "audio/wav" });
-          console.log("blob:", audioBlob);
+          // console.log("blob:", audioBlob);
           const audioUrl = URL.createObjectURL(audioBlob);
 
           return (
