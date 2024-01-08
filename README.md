@@ -1,10 +1,5 @@
 # QuickChat
 
-<<<<<<< HEAD
-# QuickChat
-
-=======
->>>>>>> 188f71d404648ea1e7289870382b92a32ed03dec
 QuickChat is a Full Stack Chatting App.
 Uses Socket.io for real time communication and stores user details in encrypted format in Mongo DB Database.
 ## Tech Stack
@@ -17,10 +12,6 @@ Uses Socket.io for real time communication and stores user details in encrypted 
   
 ## Demo
 
-<<<<<<< HEAD
-https://QuickChat.herokuapp.com/
-=======
->>>>>>> 188f71d404648ea1e7289870382b92a32ed03dec
 
 ## Run Locally
 
