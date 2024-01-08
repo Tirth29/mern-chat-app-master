@@ -12,13 +12,17 @@ import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 import Picker from "emoji-picker-react";
-
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { socket_host } from "../config.json";
 const ENDPOINT = socket_host; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
+
+let audioChunks = [];
+let audioBlob;
+let audioBuffer;
+let mediaRecorder;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -27,6 +31,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const toast = useToast();
 
   const defaultOptions = {
@@ -56,6 +61,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         `/api/message/${selectedChat._id}`,
         config
       );
+
       setMessages(data);
       setLoading(false);
 
@@ -73,28 +79,46 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const sendMessage = async (event) => {
-    if (event.key === "Enter" && newMessage) {
+    if (event.key === "Enter" && (newMessage || audioBuffer)) {
       socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
           headers: {
             "Content-type": "application/json",
             Authorization: `Bearer ${user.token}`,
+            maxBodyLength:100000000,
           },
         };
         setNewMessage("");
         let delay = 0;
         const { data } = await axios.post(
-          "/api/message",
-          {
+          "http://localhost:3001/api/message",
+          JSON.stringify({
             content: newMessage,
             chatId: selectedChat,
             delay,
-          },
+            audio: audioBuffer?.join(","),
+            type: audioBuffer ? "audio" : "text",
+          }),
           config
         );
+
         data.delay = delay;
-        socket.emit("schedule_message", data);
+        data.type = audioBlob ? "audio" : "text";
+        data.audioBlob = audioBlob;
+        data.audioBuffer = audioBuffer;
+
+        console.log(data);
+
+        audioBlob = null;
+        audioChunks = [];
+        audioBuffer = null;
+
+        if (delay > 0) {
+          socket.emit("schedule_message", data);
+        } else {
+          socket.emit("new message", data);
+        }
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -142,6 +166,58 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     });
   });
+
+  const startRecording = () => {
+    audioChunks = [];
+    try {
+      mediaRecorder.start();
+      // startRecordingButton.disabled = true;
+      // stopRecordingButton.disabled = false;
+      // errorMessage.textContent = "";
+    } catch (error) {
+      console.error("Error starting recording:", error);
+      // errorMessage.textContent =
+      // "Error starting recording. Please check microphone permissions.";
+    }
+  };
+
+  const stopRecording = () => {
+    try {
+      mediaRecorder.stop();
+      // startRecordingButton.disabled = false;
+      // stopRecordingButton.disabled = true;
+    } catch (error) {
+      console.error("Error stopping recording:", error);
+      // errorMessage.textContent = "Error stopping recording.";
+    }
+  };
+
+  useEffect(() => {
+    console.log("setting up media")
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            audioChunks.push(event.data);
+          }
+        };
+        mediaRecorder.onstop = async () => {
+          audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+          console.log("Audio blob: ", audioBlob);
+          const audioUrl = URL.createObjectURL(audioBlob);
+          audioBuffer = new Uint8Array(await audioBlob.arrayBuffer());
+          document.getElementById("audioPlayer").src = audioUrl;
+        };
+      })
+      .catch((error) => {
+        console.error("Error accessing microphone:", error);
+        // errorMessage.textContent =
+        // "Error accessing microphone. Please grant permission and reload the page.";
+      });
+  }, []);
 
   const [showPicker, setShowPicker] = useState(false);
   const onEmojiClick = (event, emojiObject) => {
@@ -256,6 +332,28 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )}
+              <div className="audio-container">
+                <audio id="audioPlayer" controls></audio>
+
+                <div
+                  className="audio-icon"
+                  onClick={() => {
+                    if (isRecording) {
+                      stopRecording();
+                      setIsRecording(false);
+                    } else {
+                      startRecording();
+                      setIsRecording(true);
+                    }
+                  }}
+                >
+                  <img
+                    src="https://icons.getbootstrap.com/assets/icons/mic.svg"
+                    alt="mic"
+                    style={{ height: "25px", width: "25px" }}
+                  />
+                </div>
+              </div>
               <div className="picker-container">
                 <Input
                   variant="filled"

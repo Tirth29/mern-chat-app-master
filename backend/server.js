@@ -11,12 +11,16 @@ require("dotenv").config({ path: "./config.env" });
 connectDB();
 const app = express();
 
-app.use(express.json()); // to accept json data
-
+app.use(express.json({limit:1024*1024*10})); // to accept json data
 // app.get("/", (req, res) => {
 //   res.send("API Running!");
 // });
-
+const cors = require("cors");
+app.use(cors({ origin: process.env.CORS_ALLOWED_HOST, credentials: true }));
+app.use((req,res,next) => {
+  console.log("Req url: ", req.url);
+  next();
+})
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
