@@ -57,7 +57,8 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://192.168.120.101:3000",
+    origin: "*",
+    // origin: ["http://localhost:3000", "http://192.168.120.101:3000"],
     // credentials: true,
   },
 });
@@ -111,7 +112,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/auth/google/callback",
+      callbackURL: "/auth/google/callback",
       scope: ["profile", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -145,15 +146,19 @@ passport.deserializeUser((user, done) => {
 });
 
 // initial google ouath login
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+app.get("/auth/google", (req, res, next) => {
+  console.log("Initiating Google authentication...");
+  passport.authenticate("google", { scope: ["profile", "email"] })(
+    req,
+    res,
+    next
+  );
+});
 
-app.get(
-  "http://localhost:3001/auth/google/callback",
+app.get("/auth/google/callback", (req, res, next) => {
+  console.log("Handling Google callback...");
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000",
-    failureRedirect: "http://localhost:3000",
-  })
-);
+    successRedirect: "http://localhost:3000/",
+    failureRedirect: "http://localhost:3000/",
+  })(req, res, next);
+});

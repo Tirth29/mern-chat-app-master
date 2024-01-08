@@ -21,8 +21,14 @@ const Login = () => {
   const history = useHistory();
   const { setUser } = ChatState();
 
-  const loginwithgoogle = () => {
-    window.open("http://localhost:3001/auth/google/callback", "_self");
+  const loginwithgoogle = async () => {
+    // window.open("/auth/google/callback", "_self");
+    try {
+      const response = await axios.get("http://localhost:3001/auth/google");
+      window.location.href = response.data; // Redirect to Google OAuth URL
+    } catch (error) {
+      console.error("Google login error:", error);
+    }
   };
 
   const submitHandler = async () => {

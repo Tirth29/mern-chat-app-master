@@ -81,7 +81,9 @@ function SideDrawer() {
       const { data } = await axios.get(`/api/user?search=${search}`, config);
 
       setLoading(false);
+      console.log(data);
       setSearchResult(data);
+      console.log(searchResult);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -212,11 +214,14 @@ function SideDrawer() {
             {loading ? (
               <ChatLoading />
             ) : (
-              searchResult?.map((user) => (
+              searchResult?.map((user1) => (
                 <UserListItem
-                  key={user._id}
-                  user={user}
-                  handleFunction={() => accessChat(user._id)}
+                  key={user1._id}
+                  user={user1}
+                  handleFunction={() => {
+                    accessChat(user1._id);
+                    console.log(user1);
+                  }}
                 />
               ))
             )}
