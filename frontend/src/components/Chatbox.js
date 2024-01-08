@@ -5,7 +5,6 @@ import { ChatState } from "../Context/ChatProvider";
 
 const Chatbox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChat } = ChatState();
-
   return (
     <Box
       d={{ base: selectedChat ? "flex" : "none", md: "flex" }}

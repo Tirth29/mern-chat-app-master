@@ -18,7 +18,7 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { socket_host } from "../config.json";
-const ENDPOINT = socket_host; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+const ENDPOINT = socket_host; // "https://QuickChat.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -28,7 +28,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
-  const [delay,setDelay]=useState(0);
+  const [delay, setDelay] = useState(0);
   const toast = useToast();
 
   const defaultOptions = {
@@ -75,7 +75,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   const sendMessage = async (event) => {
-    if ((event.type==='click' || event.key === "Enter" ) && newMessage) {
+    if ((event.type === "click" || event.key === "Enter") && newMessage) {
       socket.emit("stop typing", selectedChat._id);
       console.log(delay);
       try {
@@ -111,9 +111,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-  const delayset=(data)=>{
-    setDelay(data)
-  }
+  const delayset = (data) => {
+    setDelay(data);
+  };
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -271,7 +271,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   onChange={typingHandler}
                 />
                 <div className="msg-scheduler">
-                  <MessageScheduleModal  user={user} delayset={delayset} />
+                  <MessageScheduleModal user={user} delayset={delayset} />
                 </div>
                 <img
                   className="emoji-icon"
@@ -283,7 +283,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <img
                   className="send-icon"
                   src="https://cdn-icons-png.flaticon.com/128/9502/9502119.png"
-                  onClick={(e)=>sendMessage(e)}
+                  onClick={(e) => sendMessage(e)}
                   alt="emoji"
                   style={{ height: "30px", width: "30px" }}
                 />
@@ -305,7 +305,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Text>
         </Box>
       )}
-      
     </>
   );
 };
