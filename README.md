@@ -10,8 +10,8 @@ Uses Socket.io for real time communication and stores user details in encrypted 
 
 **Database:** Mongo DB
   
-## Demo
-
+## Hosted Website
+http://13.201.70.128:8080
 
 ## Run Locally
 
